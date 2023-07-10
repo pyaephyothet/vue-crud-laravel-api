@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+//Route::get('/memo/{id}', [MemoController::class, 'show']);
 
 Route::get('/memo', [MemoController::class, 'index']);
 Route::post('/memo', [MemoController::class, 'store']);
-//Route::get('/memo/{id}', [MemoController::class, 'show']);
-Route::put('/memo/{id}', [MemoController::class, 'update']);
+Route::post('/memo/{id}', [MemoController::class, 'update']);
 Route::delete('/memo/{id}', [MemoController::class, 'destroy']);

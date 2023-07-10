@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Memo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class MemoController extends Controller
@@ -52,18 +53,28 @@ class MemoController extends Controller
     public function update(Request $request, string $id)
     {
         $memo = Memo::findOrFail($id);
-        $memo->title = $request->input('title');
-        $memo->description = $request->input('description');
+
+        $memo->title = $request->title;
+        $memo->description = $request->description;
 
         if ($request->hasFile('image')) {
-            Storage::delete('public/' . $memo->image);
-            $imagePath = Storage::putFile('public/images', $request->file('image'));
-            $imageName = explode('/', $imagePath)[2];
+            if (File::exists(public_path($memo->image))) {
+                File::delete(public_path($memo->image));
+            }
+            $imagePath = $request->file('image')->store('public/images');
+            $imageName = basename($imagePath);
             $memo->image = 'images/' . $imageName;
         }
 
         $memo->save();
-        return response()->json($memo, 200);
+
+        if ($memo) {
+            $updatedMemo = Memo::findOrFail($id);
+            return response()->json($updatedMemo, 200);
+        } else {
+            return response()->json(['error' => 'Memo not found'], 404);
+        }
+
     }
 
     /**
