@@ -110,8 +110,8 @@ async function createMemo() {
   try {
     const response = await axios.post("http://localhost:8000/api/memo", formData);
     memo.value.push(response.data);
-    router.push({ name: "IndexMemo" });
     resetNewMemo();
+    router.push({ name: "IndexMemo" });
   } catch (error) {
     console.error(error);
   }
