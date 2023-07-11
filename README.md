@@ -2,6 +2,8 @@
 
 ## About
 This is a simple vue crud.
+![image_2023_07_11T02_50_48_181Z](https://github.com/pyaephyothet/vue-crud-laravel-api/assets/122725279/5a2246b3-63c1-4c4e-b45b-32e6806aca45)
+
 
 
 ## Requirements
